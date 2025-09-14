@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.stream.*;
 
@@ -127,9 +128,9 @@ public class QuizCardBuilder {
 			java.util.List<String> lines;
 			//стримом создаем строку типа "Вопрос/Ответ"
 			lines = cardList.stream()
-							.map(c -> c.getQuestion() + "/" + c.getAnswer() + "\n")
+							.map(c -> c.getQuestion() + "/" + c.getAnswer())
 							.collect(Collectors.toList());
-			Files.write(path, lines);
+			Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (Exception e) {
 			throw new MyException("Exception on write to file: " + 
 					e.getMessage());
